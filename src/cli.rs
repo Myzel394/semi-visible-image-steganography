@@ -1,5 +1,5 @@
 pub mod cli {
-    use clap::{arg, value_parser, ValueEnum, builder::PossibleValue, Command, Arg, ArgAction};
+    use clap::{value_parser, ValueEnum, builder::PossibleValue, Command, Arg, ArgAction};
     use image::Rgb;
 
     use crate::utils::utils::{str_to_rgb, convert_num_to_binary, RemainingBehavior};
@@ -116,10 +116,16 @@ pub mod cli {
                     .default_value("take-firsts")
             );
         let matches = cmd_args.get_matches();
-
         
         CliArguments {
-            binary_data: matches.get_one::<String>("text").unwrap().to_string().into_bytes().iter().flat_map(|number| convert_num_to_binary(number)).collect(),
+            binary_data: matches
+                .get_one::<String>("text")
+                .unwrap()
+                .to_string()
+                .into_bytes()
+                .iter()
+                .flat_map(|number| convert_num_to_binary(number))
+                .collect(),
             output: matches.get_one::<String>("output").unwrap().to_string(),
             image_width: *matches.get_one::<u32>("image-width").unwrap(),
             image_height: *matches.get_one::<u32>("image-height").unwrap(),

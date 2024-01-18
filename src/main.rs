@@ -40,7 +40,11 @@ fn main() {
             &args.remaining_behavior,
         );
 
+    info!("Painting pixels...");
+
     painter.paint_data(&data);
+
+    info!("Done! Image will now be saved to {}", args.output);
 
     image.save(args.output).unwrap();
 }
