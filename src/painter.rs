@@ -1,11 +1,11 @@
 pub mod painter {
     use image::{RgbImage, Rgb};
 
-    use crate::{cli::cli::CliArguments};
+    use crate::cli::cli::CliArguments;
 
     pub struct Painter<'a> {
         cli_arguments: &'a CliArguments,
-        image: &'a mut RgbImage
+        image: &'a mut RgbImage,
     }
 
     impl Painter<'_> {
@@ -61,14 +61,14 @@ pub mod painter {
             let px_height = self.cli_arguments.pixel_height as u32;
 
             let image_width = self.cli_arguments.image_width as u32;
-            let image_height = self.cli_arguments.image_height as u32;
+
+            let pixels_per_row = image_width / px_width;
 
             for (ii, val) in data.iter().enumerate() {
                 let index = ii as u32;
 
-                let position = index * px_width;
-                let x = position % image_width;
-                let y = (position / image_width) * px_height;
+                let x = (index % pixels_per_row) * px_width;
+                let y = (index / pixels_per_row) * px_height;
 
                 if *val {
                     self._paint_raw_block(x, y, &self.cli_arguments.on_color);

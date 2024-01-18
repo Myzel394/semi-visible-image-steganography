@@ -13,7 +13,7 @@ const ONE_AS_STRING: &str = "1";
 const ZERO_AS_STRING: &str = "0";
 
 fn main() {
-    logger::logger::init();
+    let _ = logger::logger::init();
 
     let args = cli::cli::parse();
 

@@ -17,7 +17,6 @@ pub mod utils {
         (0..8).rev().map(|n| (number >> n) & 1 == 1).to_owned().collect()
     }
 
-
     // Returns the data, plus padding so that the row in the image
     // will be filled with `false`s.
     // This function assumes image_width is divisible by width without
@@ -47,15 +46,14 @@ pub mod utils {
         pixel_height: &u32,
         remaining_behavior: RemainingBehavior
     ) -> Vec<bool> {
-        let full_width = image_width * image_height;
-        let available_pixels = (full_width / (pixel_width * pixel_height)) as usize;
+        let pixels_per_row = image_width / pixel_width;
+        let pixels_per_column = image_height / pixel_height;
+        let available_pixels = (pixels_per_row * pixels_per_column) as usize;
         let repeats = available_pixels / data.len();
-
-        dbg!(available_pixels, repeats, data.len());
 
         let mut result: Vec<bool> = (0..repeats).flat_map(|_| data.clone()).collect();
 
-        match (remaining_behavior) {
+        match remaining_behavior {
              RemainingBehavior::DoNothing => {}
              RemainingBehavior::PadWithNull => {
                 let remaining = available_pixels - result.len();
@@ -71,23 +69,4 @@ pub mod utils {
 
         result
     }
-
-    // Creates a number to binary representation
-    // using division approach
-    // pub fn num_to_binary_using_div(number: &u8) -> Vec<bool> {
-    //     let mut values: Vec<bool> = vec![];
-    //     let nums = [128, 64, 32, 16, 8, 4, 2, 1];
-    //
-    //     let mut current_num = number.clone();
-    //
-    //     for num in nums {
-    //         let int_div = current_num / num;
-    //         let float_div = current_num as f64 / num as f64;
-    //         let divisible: bool = int_div as f64 == float_div;
-    //
-    //         values.push(divisible);
-    //     }
-    //
-    //     values
-    // }
 }
