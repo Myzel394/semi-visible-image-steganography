@@ -7,7 +7,7 @@ pub mod logger;
 use image::{RgbImage, ImageBuffer};
 use log::info;
 use painter::painter::Painter;
-use utils::utils::{repeat_data_until_full, RemainingBehavior};
+use utils::utils::repeat_data_until_full;
 
 const ONE_AS_STRING: &str = "1";
 const ZERO_AS_STRING: &str = "0";
@@ -37,7 +37,7 @@ fn main() {
             &args.image_height, 
             &(args.pixel_width as u32),
             &(args.pixel_height as u32),
-            RemainingBehavior::TakeFirsts,
+            &args.remaining_behavior,
         );
 
     painter.paint_data(&data);

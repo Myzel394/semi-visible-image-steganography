@@ -32,6 +32,7 @@ pub mod utils {
         [&data[..], &padded_items[..]].concat()
     }
 
+    #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
     pub enum RemainingBehavior {
         PadWithNull,
         DoNothing,
@@ -44,7 +45,7 @@ pub mod utils {
         image_height: &u32, 
         pixel_width: &u32,
         pixel_height: &u32,
-        remaining_behavior: RemainingBehavior
+        remaining_behavior: &RemainingBehavior
     ) -> Vec<bool> {
         let pixels_per_row = image_width / pixel_width;
         let pixels_per_column = image_height / pixel_height;
